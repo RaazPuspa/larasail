@@ -111,3 +111,7 @@ Following extensions are available in every tag:
 - `php-xdebug`
 - `php-xml`
 - `php-zip`
+
+#### MS SQL Server support
+
+Extension `php-sybase` with support of MS SQL Server is available with all `sqlsrv` tags.
