@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [ ! -z "$TZ" ]; then
+    echo ${TZ} > /etc/timezone
+    ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime
+fi
+
 if [ ! -z "$WWWUSER" ]; then
     usermod -u $WWWUSER sail
 fi

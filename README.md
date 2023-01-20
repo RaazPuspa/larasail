@@ -79,11 +79,18 @@ networks:
 
 ### What's included
 
-All available tags of larasail includes PHP of selected version and following node packages:
+All available tags of larasail includes PHP of selected version and following packages:
 
-- Node v19.4.0
-- NPM v9.2.0
-- Yarn v1.22.19
+- Composer (v2.5.1)
+- Curl (v7.81.0)
+- Git (v2.34.1)
+- Node (v19.4.0)
+- NPM (v9.2.0)
+- Supervisord (v4.2.1)
+- Unzip (v6.0)
+- Vim (v8.2)
+- Yarn (v1.22.19)
+- Zip (v3.0)
 
 #### PHP Extensions
 
@@ -114,8 +121,13 @@ Following extensions are available in every tag:
 
 #### MS SQL Server support
 
-Extension `php-sybase` with support of MS SQL Server is available with all `sqlsrv` and `sqlsrv-wkhtml` tags.
+All tags include support for MS-SQL Server:
+
+- `unixodbc`
+- `php-sybase`
+- `php-sqlsrv`
+- `pdo_sqlsrv`
 
 #### PDF Generation
 
-The [wkhtmltopdf](https://wkhtmltopdf.org) is available with all `wkhtml` and `sqlsrv-wkhtml` tags.
+The [wkhtmltopdf](https://wkhtmltopdf.org) is available with all `wkhtml` versions.
