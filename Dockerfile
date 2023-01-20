@@ -93,3 +93,29 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+FROM default as wkhtml
+
+RUN apt-get update \
+    && apt-get install -y wget \
+    && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
+    && apt-get install ./wkhtmltox_0.12.6.1-2.jammy_amd64.deb -y \
+    && rm wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
+    && apt-get install fonts-indic -y \
+    && fc-cache -f \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+FROM sqlsrv as sqlsrv-wkhtml
+
+RUN apt-get update \
+    && apt-get install -y wget \
+    && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
+    && apt-get install ./wkhtmltox_0.12.6.1-2.jammy_amd64.deb -y \
+    && rm wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
+    && apt-get install fonts-indic -y \
+    && fc-cache -f \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

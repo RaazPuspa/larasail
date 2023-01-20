@@ -114,4 +114,8 @@ Following extensions are available in every tag:
 
 #### MS SQL Server support
 
-Extension `php-sybase` with support of MS SQL Server is available with all `sqlsrv` tags.
+Extension `php-sybase` with support of MS SQL Server is available with all `sqlsrv` and `sqlsrv-wkhtml` tags.
+
+#### PDF Generation
+
+The [wkhtmltopdf](https://wkhtmltopdf.org) is available with all `wkhtml` and `sqlsrv-wkhtml` tags.
