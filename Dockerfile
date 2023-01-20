@@ -66,19 +66,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY start-container /usr/local/bin/start-container
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-sail.ini
-
-RUN groupadd --force -g ${WWWGROUP} sail \
-    && useradd -ms /bin/bash --no-user-group -g ${WWWGROUP} -u ${WWWUSER} sail \
-    && setcap "cap_net_bind_service=+ep" /usr/bin/php${PHP_VERSION} \
-    && chmod +x /usr/local/bin/start-container
-
-ENTRYPOINT ["start-container"]
-
-FROM default as sqlsrv
-
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
@@ -94,20 +81,18 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+COPY start-container /usr/local/bin/start-container
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY php.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-sail.ini
+
+RUN groupadd --force -g ${WWWGROUP} sail \
+    && useradd -ms /bin/bash --no-user-group -g ${WWWGROUP} -u ${WWWUSER} sail \
+    && setcap "cap_net_bind_service=+ep" /usr/bin/php${PHP_VERSION} \
+    && chmod +x /usr/local/bin/start-container
+
+ENTRYPOINT ["start-container"]
+
 FROM default as wkhtml
-
-RUN apt-get update \
-    && apt-get install -y wget \
-    && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
-    && apt-get install ./wkhtmltox_0.12.6.1-2.jammy_amd64.deb -y \
-    && rm wkhtmltox_0.12.6.1-2.jammy_amd64.deb \
-    && apt-get install fonts-indic -y \
-    && fc-cache -f \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-FROM sqlsrv as sqlsrv-wkhtml
 
 RUN apt-get update \
     && apt-get install -y wget \
