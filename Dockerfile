@@ -35,6 +35,7 @@ RUN apt-get update \
         php${PHP_VERSION}-dev \
         php${PHP_VERSION}-gd \
         php${PHP_VERSION}-igbinary \
+        php${PHP_VERSION}-imagick \
         php${PHP_VERSION}-imap \
         php${PHP_VERSION}-intl \
         php${PHP_VERSION}-ldap \
@@ -48,6 +49,7 @@ RUN apt-get update \
         php${PHP_VERSION}-redis \
         php${PHP_VERSION}-soap \
         php${PHP_VERSION}-sqlite3 \
+        php${PHP_VERSION}-swoole \
         php${PHP_VERSION}-xdebug \
         php${PHP_VERSION}-xml \
         php${PHP_VERSION}-zip \
