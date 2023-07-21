@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 LATEST=false
-VERSIONS=('7.3' '7.4' '8.0' '8.1' '8.2')
+VERSIONS=('8.0' '8.1' '8.2')
 
 while [ ! $# -eq 0 ]; do
     case "$1" in
@@ -24,10 +24,10 @@ done
 
 for VERSION in "${VERSIONS[@]}"
 do
-  docker build larasail --no-cache --build-arg PHP_VERSION=$VERSION -t raazpuspa/larasail:$VERSION --target=default
+  docker build . --no-cache --build-arg PHP_VERSION=$VERSION -t raazpuspa/larasail:$VERSION --target=default
   docker push raazpuspa/larasail:$VERSION
 
-  docker build larasail --build-arg PHP_VERSION=$VERSION -t raazpuspa/larasail:$VERSION-wkhtml --target=wkhtml
+  docker build . --build-arg PHP_VERSION=$VERSION -t raazpuspa/larasail:$VERSION-wkhtml --target=wkhtml
   docker push raazpuspa/larasail:$VERSION-wkhtml
 done
 
