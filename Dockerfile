@@ -2,8 +2,8 @@ FROM ubuntu:22.04 as default
 
 LABEL maintainer="Pusparaj Bhattarai"
 
-ARG PHP_VERSION=8.2
-ARG NODE_VERSION=19
+ARG PHP_VERSION=8.3
+ARG NODE_VERSION=20
 
 WORKDIR /var/www/html
 
@@ -59,6 +59,7 @@ RUN apt-get update \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
+    && curl -fsSL https://get.pnpm.io/install.sh | bash - \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
