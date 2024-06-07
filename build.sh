@@ -10,7 +10,7 @@ while [ ! $# -eq 0 ]; do
         ;;
     -v | --version)
         if [ "$2" ]; then
-            VERSIONS=($2)
+            VERSIONS=("$2")
             shift
         else
             echo "${1} requires a value"
