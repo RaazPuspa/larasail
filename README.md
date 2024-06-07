@@ -81,15 +81,16 @@ networks:
 
 All available tags of larasail includes PHP of selected version and following packages:
 
-- Composer (v2.5.1)
+- Composer (v2.7.6)
 - Curl (v7.81.0)
 - Git (v2.34.1)
-- Node (v19.4.0)
-- NPM (v9.2.0)
+- Laravel Installer (v5.8.2)
+- Node (v20.14.0)
+- NPM (v10.7.0)
 - Supervisord (v4.2.1)
 - Unzip (v6.0)
 - Vim (v8.2)
-- Yarn (v1.22.19)
+- Yarn (v1.22.22)
 - Zip (v3.0)
 
 #### PHP Extensions

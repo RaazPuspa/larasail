@@ -11,6 +11,8 @@ ENV TZ UTC
 ENV EDITOR vim
 ENV WWWUSER 1000
 ENV WWWGROUP 1000
+ENV COMPOSER_HOME /home/sail/.composer
+ENV PATH "${PATH}:${COMPOSER_HOME}/vendor/bin"
 
 RUN apt-get update \
     && apt-get -y upgrade \
@@ -70,7 +72,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
     && ACCEPT_EULA=Y apt-get install -y mssql-tools18 \
@@ -84,6 +86,13 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apt-get update \
+    && apt-get -y upgrade \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN composer global require laravel/installer
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-sail.ini
@@ -92,6 +101,8 @@ RUN groupadd --force -g ${WWWGROUP} sail \
     && useradd -ms /bin/bash --no-user-group -g ${WWWGROUP} -u ${WWWUSER} sail \
     && setcap "cap_net_bind_service=+ep" /usr/bin/php${PHP_VERSION} \
     && chmod +x /usr/local/bin/start-container
+
+RUN chown -R sail:sail /home/sail
 
 ENTRYPOINT ["start-container"]
 
