@@ -27,14 +27,10 @@ do
   docker build . --no-cache --build-arg PHP_VERSION="$VERSION" -t raazpuspa/larasail:"$VERSION" --target=default
   docker push raazpuspa/larasail:"$VERSION"
 
-  docker build . --build-arg PHP_VERSION="$VERSION" -t raazpuspa/larasail:"$VERSION"-wkhtml --target=wkhtml
-  docker push raazpuspa/larasail:"$VERSION"-wkhtml
 done
 
 if [ "$LATEST" = true ]; then
   docker tag raazpuspa/larasail:"$VERSION" raazpuspa/larasail:latest
   docker push raazpuspa/larasail:latest
 
-  docker tag raazpuspa/larasail:"$VERSION"-wkhtml raazpuspa/larasail:latest-wkhtml
-  docker push raazpuspa/larasail:latest-wkhtml
 fi
