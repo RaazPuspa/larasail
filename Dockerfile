@@ -4,6 +4,7 @@ LABEL maintainer="Pusparaj Bhattarai"
 
 ARG PHP_VERSION=8.3
 ARG NODE_VERSION=22
+ARG PGSQL_VERSION=17
 
 WORKDIR /var/www/html
 
@@ -70,7 +71,7 @@ RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/
     && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/keyrings/pgdg.gpg >/dev/null \
     && echo "deb [signed-by=/etc/apt/keyrings/pgdg.gpg] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update -q \
-    && apt-get install -y mysql-client nodejs postgresql-client vim yarn \
+    && apt-get install -y mysql-client nodejs postgresql-client-$PGSQL_VERSION vim yarn \
     && apt-get -y upgrade \
     && apt-get -y autoremove \
     && apt-get clean \
