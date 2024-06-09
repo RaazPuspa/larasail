@@ -77,21 +77,6 @@ RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
-    && ACCEPT_EULA=Y apt-get install -y mssql-tools18 \
-    && export PATH="${PATH}:/opt/mssql-tools18/bin" \
-    && apt-get install -y freetds-common freetds-bin unixodbc php${PHP_VERSION}-sybase \
-    && apt-get install -y unixodbc-dev \
-    && pecl install sqlsrv \
-    && pecl install pdo_sqlsrv \
-    && phpenmod -v ${PHP_VERSION} sqlsrv pdo_sqlsrv \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 RUN apt-get update -q \
     && apt-get -y upgrade \
     && apt-get -y autoremove \
@@ -113,3 +98,19 @@ RUN chown -R sail:sail /home/sail
 
 ENTRYPOINT ["start-container"]
 
+FROM default AS mssql
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update -q \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
+    && ACCEPT_EULA=Y apt-get install -y mssql-tools18 \
+    && export PATH="${PATH}:/opt/mssql-tools18/bin" \
+    && apt-get install -y freetds-common freetds-bin unixodbc php${PHP_VERSION}-sybase \
+    && apt-get install -y unixodbc-dev \
+    && pecl install sqlsrv \
+    && pecl install pdo_sqlsrv \
+    && phpenmod -v ${PHP_VERSION} sqlsrv pdo_sqlsrv \
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

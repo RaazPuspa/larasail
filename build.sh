@@ -27,10 +27,14 @@ do
   docker build . --no-cache --build-arg PHP_VERSION="$VERSION" -t raazpuspa/larasail:"$VERSION" --target=default
   docker push raazpuspa/larasail:"$VERSION"
 
+  docker build . --build-arg PHP_VERSION="$VERSION" -t raazpuspa/larasail:"$VERSION"-mssql --target=mssql
+  docker push raazpuspa/larasail:"$VERSION"-mssql
 done
 
 if [ "$LATEST" = true ]; then
   docker tag raazpuspa/larasail:"$VERSION" raazpuspa/larasail:latest
   docker push raazpuspa/larasail:latest
 
+  docker tag raazpuspa/larasail:"$VERSION"-mssql raazpuspa/larasail:latest-mssql
+  docker push raazpuspa/larasail:latest-mssql
 fi
