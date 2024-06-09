@@ -83,7 +83,9 @@ RUN apt-get update -q \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN composer global require laravel/installer
+RUN mkdir -p /home/sail/.composer \
+    && composer global require laravel/installer
+
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-sail.ini
