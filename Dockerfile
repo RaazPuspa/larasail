@@ -12,6 +12,7 @@ ENV TZ=UTC
 ENV EDITOR=vim
 ENV WWWUSER=1000
 ENV WWWGROUP=1000
+ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_HOME=/home/sail/.composer
 ENV PATH="${PATH}:${COMPOSER_HOME}/vendor/bin"
 ENV SUPERVISOR_SERVE_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
@@ -102,6 +103,8 @@ RUN userdel -r ubuntu \
     && chmod +x /usr/local/bin/start-container
 
 RUN chown -R sail:sail /home/sail
+
+EXPOSE 80/tcp
 
 ENTRYPOINT ["start-container"]
 

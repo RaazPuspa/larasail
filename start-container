@@ -1,22 +1,18 @@
 #!/usr/bin/env bash
 
-if [ ! -z "$TZ" ]; then
-    echo ${TZ} > /etc/timezone
-    ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime
+if [ -n "$TZ" ]; then
+    echo "${TZ}" > /etc/timezone
+    ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 fi
 
-if [ ! -z "$WWWUSER" ]; then
-    usermod -u $WWWUSER sail
+if [[ -n "$WWWUSER" && "$(id -u sail)" -ne "$WWWUSER" ]]; then
+    usermod -u "$WWWUSER" sail
 fi
 
-if [ ! -d /.composer ]; then
-    mkdir /.composer
-fi
-
-chmod -R ugo+rw /.composer
+chmod -R ugo+rw /home/sail/.composer
 
 if [ $# -gt 0 ];then
-    exec gosu $WWWUSER "$@"
+    exec gosu "$WWWUSER" "$@"
 else
     /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 fi
