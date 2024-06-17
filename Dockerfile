@@ -14,6 +14,8 @@ ENV WWWUSER=1000
 ENV WWWGROUP=1000
 ENV COMPOSER_HOME=/home/sail/.composer
 ENV PATH="${PATH}:${COMPOSER_HOME}/vendor/bin"
+ENV SUPERVISOR_SERVE_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
+ENV SUPERVISOR_SERVE_USER="sail"
 
 
 RUN apt-get update -q \
