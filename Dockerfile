@@ -17,6 +17,9 @@ ENV PATH="${PATH}:${COMPOSER_HOME}/vendor/bin"
 ENV SUPERVISOR_SERVE_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 ENV SUPERVISOR_SERVE_USER="sail"
 
+RUN echo "Acquire::http::Pipeline-Depth 0;" > /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99custom && \
+    echo "Acquire::BrokenProxy    true;" >> /etc/apt/apt.conf.d/99custom
 
 RUN apt-get update -q \
     && apt-get -y upgrade \
