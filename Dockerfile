@@ -78,6 +78,9 @@ RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/
     && echo "deb [signed-by=/etc/apt/keyrings/pgdg.gpg] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update -q \
     && apt-get install -y mysql-client nodejs postgresql-client-$PGSQL_VERSION vim yarn \
+    && npm install -g bun \
+    && npm install -g npm \
+    && npm install -g pnpm \
     && apt-get -y upgrade \
     && apt-get -y autoremove \
     && apt-get clean \
