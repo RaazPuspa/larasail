@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 LATEST=false
-VERSIONS=('8.1' '8.2' '8.3')
+VERSIONS=('8.1' '8.2' '8.3' '8.4')
 
 while [ ! $# -eq 0 ]; do
     case "$1" in

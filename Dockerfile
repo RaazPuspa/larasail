@@ -2,7 +2,7 @@ FROM ubuntu:24.04 AS default
 
 LABEL maintainer="Pusparaj Bhattarai"
 
-ARG PHP_VERSION=8.3
+ARG PHP_VERSION=8.4
 ARG NODE_VERSION=22
 ARG PGSQL_VERSION=17
 
