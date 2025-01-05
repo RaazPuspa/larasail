@@ -21,4 +21,4 @@ jobs:
 
       - name: Build and Push Tags
         run: |
-          build.sh --latest
+          ./build.sh --latest
